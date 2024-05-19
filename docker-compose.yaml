@@ -1,0 +1,23 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:latest    
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
+    networks:
+      - library-net
+  api:
+    image: mylibrary:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - library-net
+
+networks:
+  library-net:
+    driver: bridge
+  

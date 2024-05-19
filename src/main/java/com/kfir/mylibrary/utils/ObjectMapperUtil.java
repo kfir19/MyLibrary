@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author ragcrix
+ * For mapping one object to another
  */
 public class ObjectMapperUtil {
 

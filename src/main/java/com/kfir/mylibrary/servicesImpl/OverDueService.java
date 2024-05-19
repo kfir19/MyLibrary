@@ -18,13 +18,16 @@ public class OverDueService {
     @Autowired
     private BooksRepository repo;
 
+    /**
+     * Service that runs periodically (once a day) and notify for any overdue book
+     */
     @Bean
     public void StartInBackground() {
         TimerTask checkForOverdueBooksTask = new TimerTask() {
             public void run() {
                 List<Book> dueBooks = repo.findAllByDueDateIsBefore(LocalDate.now());
                 if (dueBooks != null && !dueBooks.isEmpty()) {
-                    dueBooks.stream().forEach(b -> System.out.println(String.format("%s was due in %s", b.getTitle(), b.getDueDate())));
+                    dueBooks.stream().forEach(b -> System.out.printf("%s was due in %s%n", b.getTitle(), b.getDueDate()));
                 }
             }
         };
