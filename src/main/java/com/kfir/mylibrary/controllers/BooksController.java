@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -179,7 +178,7 @@ public class BooksController {
     @GetMapping(value = "/dateIsDue")
     public ResponseEntity<List<BookDTO>> getAllDateIsDueBooks() {
         try {
-            return service.findAllByDueDateIsBefore(LocalDate.now());
+            return service.findAllByDueDateIsBefore();
         } catch (EmptyResultsException e) {
             throw new ResponseStatusException(HttpStatus.ACCEPTED, e.getMessage());
         }

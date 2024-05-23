@@ -3,13 +3,9 @@ package com.kfir.mylibrary.services;
 import com.kfir.mylibrary.dto.BookDTO;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public interface BooksService {
-
-    ResponseEntity<BookDTO> findById(UUID id);
 
     ResponseEntity<List<BookDTO>> findAllByTitle(String title);
 
@@ -29,5 +25,5 @@ public interface BooksService {
 
     ResponseEntity<BookDTO> returnBook(String id);
 
-    ResponseEntity<List<BookDTO>> findAllByDueDateIsBefore(LocalDate today);
+    ResponseEntity<List<BookDTO>> findAllByDueDateIsBefore();
 }

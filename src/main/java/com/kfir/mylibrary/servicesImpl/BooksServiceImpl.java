@@ -28,24 +28,6 @@ public class BooksServiceImpl implements BooksService {
     private BooksRepository repo;
 
     /**
-     * Method for finding a book by its id
-     *
-     * @param id - param for finding the book
-     * @return Response entity with the found book and status code ok (200)
-     * @throws BookNotFoundException is thrown in case book was not found
-     */
-    @Override
-    public ResponseEntity<BookDTO> findById(UUID id) {
-        Optional<Book> book = repo.findById(id);
-        if (book.isPresent()) {
-            BookDTO bookDTO = ObjectMapperUtil.map(book.get(), BookDTO.class);
-            return ResponseEntity.ok(bookDTO);
-        } else {
-            throw new BookNotFoundException("book not found");
-        }
-    }
-
-    /**
      * Method for finding all books by their title
      *
      * @param title - param for finding the books
@@ -109,7 +91,7 @@ public class BooksServiceImpl implements BooksService {
     public ResponseEntity<List<BookDTO>> findAll() {
 
         List<Book> books = repo.findAll(Sort.by(Sort.Direction.ASC, "title"));
-        if (books != null && !books.isEmpty()) {
+        if (!books.isEmpty()) {
             List<BookDTO> booksDTOs = ObjectMapperUtil.mapAll(books, BookDTO.class);
             return ResponseEntity.ok(booksDTOs);
         } else {
@@ -242,14 +224,12 @@ public class BooksServiceImpl implements BooksService {
     /**
      * Method for finding all overdue books
      *
-     * @param today - param for finding all overdue books,
-     *              any overdue date field value before this param is considered overdue
      * @return Response entity with a list of all overdue books and status code ok (200)
      * @throws EmptyResultsException is thrown in case the search yielded no results
      */
     @Override
-    public ResponseEntity<List<BookDTO>> findAllByDueDateIsBefore(LocalDate today) {
-        List<Book> books = repo.findAllByDueDateIsBefore(today);
+    public ResponseEntity<List<BookDTO>> findAllByDueDateIsBefore() {
+        List<Book> books = repo.findAllByDueDateIsBefore(LocalDate.now());
         if (books != null && !books.isEmpty()) {
             List<BookDTO> booksDTOs = ObjectMapperUtil.mapAll(books, BookDTO.class);
             return ResponseEntity.ok(booksDTOs);
